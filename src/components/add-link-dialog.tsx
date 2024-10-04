@@ -53,6 +53,7 @@ const AddLinkDialog = ({ links, setLinks }: AddLinkProps) => {
       setLinks([...links, { ...newLink, id: data.id }]);
       setNewName("");
       setNewUrl("");
+      setNewOrder(0);
       setIsDialogOpen(false);
     } catch (error) {
       console.error("Error adding link:", error);
