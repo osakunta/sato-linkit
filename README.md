@@ -1,4 +1,4 @@
-# SatO Linkkit
+# SatO Linkit
 
 Can add docs later, but this project uses Next, Tailwind, ShadCN, next-auth(google 0auth), and firebase. 
 
