@@ -11,5 +11,3 @@ openssl rand -base64 32
 ```
 
 NEXTAUTH_URL is just whatever url you are routing to.
-
-test
