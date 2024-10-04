@@ -15,6 +15,7 @@ interface Link {
   id: string;
   name: string;
   url: string;
+  order: number;
 }
 
 interface AddLinkProps {
@@ -26,11 +27,13 @@ const AddLinkDialog = ({ links, setLinks }: AddLinkProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [newName, setNewName] = useState<string>("");
   const [newUrl, setNewUrl] = useState<string>("");
+  const [newOrder, setNewOrder] = useState<number>(0);
 
   const handleAddLink = async () => {
     const newLink = {
       name: newName,
       url: newUrl,
+      order: newOrder,
     };
 
     try {
@@ -101,6 +104,13 @@ const AddLinkDialog = ({ links, setLinks }: AddLinkProps) => {
               type="text"
               value={newUrl}
               onChange={(e) => setNewUrl(e.target.value)}
+              placeholder="URL"
+              className="p-2 border border-gray-300 rounded"
+            />
+            <input
+              type="number"
+              value={newOrder}
+              onChange={(e) => setNewOrder(parseInt(e.target.value))}
               placeholder="URL"
               className="p-2 border border-gray-300 rounded"
             />

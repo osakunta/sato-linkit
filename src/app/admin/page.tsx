@@ -8,6 +8,7 @@ interface Link {
   id: string;
   name: string;
   url: string;
+  order: number;
 }
 
 function Admin() {
@@ -16,13 +17,17 @@ function Admin() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editedName, setEditedName] = useState<string>("");
   const [editedUrl, setEditedUrl] = useState<string>("");
+  const [editedOrder, setEditedOrder] = useState<number>();
 
   useEffect(() => {
     const fetchLinks = async () => {
       const response = await fetch("/api/crud/get-links");
       if (response.ok) {
         const linksList = await response.json();
-        setLinks(linksList);
+        const sortedLinks = linksList.sort(
+          (a: Link, b: Link) => a.order - b.order
+        );
+        setLinks(sortedLinks);
       } else {
         console.error("Failed to fetch links");
       }
@@ -31,10 +36,11 @@ function Admin() {
     fetchLinks();
   }, []);
 
-  const handleEdit = (id: string, name: string, url: string) => {
+  const handleEdit = (id: string, name: string, url: string, order: number) => {
     setEditingId(id);
     setEditedName(name);
     setEditedUrl(url);
+    setEditedOrder(order);
   };
 
   const handleSave = async (id: string) => {
@@ -48,6 +54,7 @@ function Admin() {
           id,
           name: editedName,
           url: editedUrl,
+          order: editedOrder,
         }),
       });
 
@@ -110,6 +117,15 @@ function Admin() {
                   className="mb-2 p-2 border border-gray-300 rounded"
                   placeholder="Edit URL"
                 />
+                <input
+                  type="number"
+                  value={editedOrder}
+                  onChange={(e) =>
+                    setEditedOrder(parseInt(e.target.value, 10) || 0)
+                  } // Handle order input
+                  className="mb-2 p-2 border border-gray-300 rounded"
+                  placeholder="Edit order"
+                />
               </div>
             ) : (
               <a
@@ -133,7 +149,9 @@ function Admin() {
               ) : (
                 <div className="flex flex-row justify-center items-center gap-4">
                   <button
-                    onClick={() => handleEdit(link.id, link.name, link.url)}
+                    onClick={() =>
+                      handleEdit(link.id, link.name, link.url, link.order)
+                    }
                     className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-sm"
                   >
                     Edit

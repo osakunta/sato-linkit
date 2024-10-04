@@ -3,9 +3,13 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
 export async function PUT(request: Request) {
-  console.log("API Route Hit - Edit Link");
   try {
-    const { id, name, url }: { id: string; name: string; url: string } =
+    const {
+      id,
+      name,
+      url,
+      order,
+    }: { id: string; name: string; url: string; order: number } =
       await request.json();
 
     const linkDoc = doc(db, "links", id);
@@ -16,9 +20,9 @@ export async function PUT(request: Request) {
       return new NextResponse("Document not found", { status: 404 });
     }
 
-    await updateDoc(linkDoc, { name, url });
+    await updateDoc(linkDoc, { name, url, order });
 
-    return NextResponse.json({ id, name, url }, { status: 200 });
+    return NextResponse.json({ id, name, url, order }, { status: 200 });
   } catch (error) {
     console.error("Error updating document: ", error);
     return new NextResponse("Error updating document", { status: 500 });

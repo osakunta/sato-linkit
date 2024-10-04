@@ -6,6 +6,7 @@ interface Link {
   id: string;
   name: string;
   url: string;
+  order: number;
 }
 
 function Home() {
@@ -16,7 +17,10 @@ function Home() {
       const response = await fetch("/api/crud/get-links");
       if (response.ok) {
         const linksList = await response.json();
-        setLinks(linksList);
+        const sortedLinks = linksList.sort(
+          (a: Link, b: Link) => a.order - b.order
+        );
+        setLinks(sortedLinks);
       } else {
         console.error("Failed to fetch links");
       }

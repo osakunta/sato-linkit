@@ -14,6 +14,7 @@ interface Link {
   id: string;
   name: string;
   url: string;
+  order: number;
 }
 
 interface DeleteLinkProps {
