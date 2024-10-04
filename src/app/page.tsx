@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 interface Link {
   id: string;
@@ -29,19 +30,17 @@ function Home() {
       <div className="w-2/5 p-4">
         {/* Display Links */}
         {links.map((link) => (
-          <div
+          <Link
             key={link.id}
-            className="flex items-center justify-between bg-gray-50 p-4 mb-2 rounded-lg shadow-md"
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            passHref
           >
-            <a
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500"
-            >
+            <div className="flex items-center justify-between bg-gray-50 p-4 mb-2 rounded-lg shadow-md">
               {link.name}
-            </a>
-          </div>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
