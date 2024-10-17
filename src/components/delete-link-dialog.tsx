@@ -19,40 +19,22 @@ interface Link {
 
 interface DeleteLinkProps {
   links: Link[];
-  setLinks: React.Dispatch<React.SetStateAction<Link[]>>;
+  deleteLink: (id: string) => Promise<void>;
   linkId: string;
   linkName: string;
 }
 
 const DeleteLinkDialog = ({
-  links,
-  setLinks,
+  deleteLink,
   linkId,
   linkName,
 }: DeleteLinkProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   const handleDeleteLink = async () => {
-    try {
-      const response = await fetch("/api/crud/delete-link", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id: linkId }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to delete link");
-      }
-
-      const updatedLinks = links.filter((link) => link.id !== linkId);
-      setLinks(updatedLinks);
-      setIsDialogOpen(false);
-      alert("Link deleted successfully!");
-    } catch (error) {
-      console.error("Error deleting link:", error);
-    }
+    deleteLink(linkId);
+    setIsDialogOpen(false);
+    alert("Link deleted successfully!");
   };
 
   return (

@@ -1,4 +1,3 @@
-import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -10,20 +9,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-
-interface Link {
-  id: string;
-  name: string;
-  url: string;
-  order: number;
-}
+import { Link as LinkType } from "@/lib/firebase";
+import { signOut } from "firebase/auth";
+import { useAuth } from "reactfire";
 
 interface AddLinkProps {
-  links: Link[];
-  setLinks: React.Dispatch<React.SetStateAction<Link[]>>;
+  links: LinkType[];
+  addLink: (link: Omit<LinkType, "id">) => Promise<void>;
 }
 
-const AddLinkDialog = ({ links, setLinks }: AddLinkProps) => {
+const AddLinkDialog = ({ addLink }: AddLinkProps) => {
+  const auth = useAuth();
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [newName, setNewName] = useState<string>("");
   const [newUrl, setNewUrl] = useState<string>("");
@@ -36,32 +32,15 @@ const AddLinkDialog = ({ links, setLinks }: AddLinkProps) => {
       order: newOrder,
     };
 
-    try {
-      const response = await fetch("/api/crud/add-link", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newLink),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to add link");
-      }
-
-      const data = await response.json();
-      setLinks([...links, { ...newLink, id: data.id }]);
-      setNewName("");
-      setNewUrl("");
-      setNewOrder(0);
-      setIsDialogOpen(false);
-    } catch (error) {
-      console.error("Error adding link:", error);
-    }
+    await addLink(newLink);
+    setNewName("");
+    setNewUrl("");
+    setNewOrder(0);
+    setIsDialogOpen(false);
   };
 
   const handleSignOut = async () => {
-    await signOut({ callbackUrl: "/" });
+    signOut(auth);
   };
 
   return (
