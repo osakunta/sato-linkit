@@ -36,6 +36,12 @@ const WithAuth = ({ children }: { children: React.ReactNode }) => {
         >
           Sign in with Google
         </button>
+        <a
+          href="/"
+          className="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4 text-white underline"
+        >
+          Back to Homepage
+        </a>
       </div>
     );
   }
@@ -97,22 +103,34 @@ const AdminContent = () => {
         >
           {editingId === link.id ? (
             <div className="flex flex-col">
+              <label htmlFor="name" className="text-sm">
+                Name
+              </label>
               <input
                 type="text"
+                id="name"
                 value={editedName}
                 onChange={(e) => setEditedName(e.target.value)}
                 className="mb-2 p-2 border border-gray-300 rounded"
                 placeholder="Edit name"
               />
+              <label htmlFor="url" className="text-sm">
+                URL
+              </label>
               <input
                 type="text"
+                id="url"
                 value={editedUrl}
                 onChange={(e) => setEditedUrl(e.target.value)}
                 className="mb-2 p-2 border border-gray-300 rounded"
                 placeholder="Edit URL"
               />
+              <label htmlFor="order" className="text-sm">
+                Order
+              </label>
               <input
                 type="number"
+                id="order"
                 value={editedOrder}
                 onChange={(e) =>
                   setEditedOrder(parseInt(e.target.value, 10) || 0)

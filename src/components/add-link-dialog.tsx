@@ -73,22 +73,34 @@ const AddLinkDialog = ({ addLink }: AddLinkProps) => {
           </DialogDescription>
           {/* Form Fields Inside the Dialog */}
           <div className="flex flex-col space-y-4">
+            <label htmlFor="name" className="text-sm">
+              Name
+            </label>
             <input
               type="text"
+              id="name"
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
               placeholder="Name"
               className="p-2 border border-gray-300 rounded"
             />
+            <label htmlFor="url" className="text-sm">
+              URL
+            </label>
             <input
               type="text"
+              id="url"
               value={newUrl}
               onChange={(e) => setNewUrl(e.target.value)}
               placeholder="URL"
               className="p-2 border border-gray-300 rounded"
             />
+            <label htmlFor="order" className="text-sm">
+              Order
+            </label>
             <input
               type="number"
+              id="order"
               value={newOrder}
               onChange={(e) => setNewOrder(parseInt(e.target.value))}
               placeholder="URL"
