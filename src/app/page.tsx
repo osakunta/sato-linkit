@@ -29,11 +29,17 @@ function Home() {
           rel="noopener noreferrer"
           passHref
         >
-          <div className="flex items-center justify-between bg-gray-50 p-4 mb-2 rounded-lg shadow-md">
+          <div className=" flex items-center justify-between bg-gray-50 p-4 mb-2 rounded-lg shadow-md">
             {link.name}
           </div>
         </Link>
       ))}
+      <a
+        href="/admin"
+        className="absolute bottom-0 left-1/2 transform -translate-x-1/2 mb-4 text-white underline"
+      >
+        Sign-In
+      </a>
     </>
   );
 }
